@@ -30,6 +30,17 @@ app.get(
   }
 );
 
+app.use("/getUserData", (req, res) => {
+  throw new Error("error");
+});
+
+//To send unwanted errors
+app.use("/", (err, req, res, next) => {
+  if (err) {
+    res.status(500).send("Something went wrong");
+  }
+});
+
 app.listen(3000, () => {
   console.log("server started in port 3000");
 });
