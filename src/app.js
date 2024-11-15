@@ -1,9 +1,21 @@
 const express = require("express");
 const { auth } = require("./middleware/auth");
+const connectDB = require("./config/database");
 
 const app = express();
 
-app.use("/admin", auth);
+connectDB()
+  .then(() => {
+    console.log("Connected to Database");
+    app.listen(3000, () => {
+      console.log("server started in port 3000");
+    });
+  })
+  .catch((err) => {
+    console.error("Database not connected");
+  });
+
+/* app.use("/admin", auth);
 
 app.get("/admin/user", (req, res) => {
   res.send("Added admin user");
@@ -39,8 +51,4 @@ app.use("/", (err, req, res, next) => {
   if (err) {
     res.status(500).send("Something went wrong");
   }
-});
-
-app.listen(3000, () => {
-  console.log("server started in port 3000");
-});
+}); */
