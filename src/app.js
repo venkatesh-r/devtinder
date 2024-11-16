@@ -1,8 +1,28 @@
 const express = require("express");
 const { auth } = require("./middleware/auth");
 const connectDB = require("./config/database");
+const User = require("./models/user");
 
 const app = express();
+
+app.post("/signup", async (req, res) => {
+  //Creating new instance of user
+  const user = new User({
+    firstName: "Venkatesh",
+    lastName: "Ramalingam",
+    email: "test@gmail.com",
+    password: "admin123",
+    age: 36,
+    gender: "male",
+  });
+
+  try {
+    await user.save();
+    res.send("User scessfully saved");
+  } catch (err) {
+    res.send("User not added to database", err.message);
+  }
+});
 
 connectDB()
   .then(() => {
