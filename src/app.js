@@ -28,6 +28,15 @@ app.post("/signup", async (req, res) => {
   }
 });
 
+app.get("/user", async (req, res) => {
+  try {
+    const userDetail = await User.find({ email: req.body.email });
+    res.send(userDetail);
+  } catch (err) {
+    res.status(404).send("Something went wrong!");
+  }
+});
+
 connectDB()
   .then(() => {
     console.log("Connected to Database");
