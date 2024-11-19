@@ -2,6 +2,7 @@ const express = require("express");
 const { auth } = require("./middleware/auth");
 const connectDB = require("./config/database");
 const User = require("./models/user");
+const user = require("./models/user");
 
 const app = express();
 
@@ -28,12 +29,38 @@ app.post("/signup", async (req, res) => {
   }
 });
 
+//Get user call
 app.get("/user", async (req, res) => {
   try {
     const userDetail = await User.find({ email: req.body.email });
     res.send(userDetail);
   } catch (err) {
     res.status(404).send("Something went wrong!");
+  }
+});
+
+//delete user call
+app.delete("/user", async (req, res) => {
+  const userId = req.body.userId;
+  console.log(userId);
+  try {
+    await user.findByIdAndDelete(userId);
+    res.send("user deleted successfully");
+  } catch (err) {
+    res.status(404).send("something went wrong");
+  }
+});
+
+//Update user
+app.patch("/user", async (req, res) => {
+  const email = req.body.email;
+  //const userDetail = req.body;
+  console.log(email);
+  try {
+    await user.findOneAndUpdate({ email }, { age: 44 });
+    res.send("User updated successfully");
+  } catch (err) {
+    res.status(404).send("Something went wrong");
   }
 });
 
