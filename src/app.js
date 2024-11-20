@@ -25,7 +25,7 @@ app.post("/signup", async (req, res) => {
     await user.save();
     res.send("User scessfully saved");
   } catch (err) {
-    res.status(500).send("User not added to database", err.message);
+    res.status(500).send("User not added to database" + err.message);
   }
 });
 
