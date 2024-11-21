@@ -9,6 +9,7 @@ const app = express();
 app.use(express.json());
 
 app.post("/signup", async (req, res) => {
+  console.log(req.body);
   //Creating new instance of user
   const user = new User(req.body);
 
@@ -52,15 +53,26 @@ app.delete("/user", async (req, res) => {
 });
 
 //Update user
-app.patch("/user", async (req, res) => {
-  const email = req.body.email;
-  //const userDetail = req.body;
-  console.log(email);
+app.patch("/user/:userId", async (req, res) => {
+  const userId = req.params?.userId;
+  const data = req.body;
   try {
-    await user.findOneAndUpdate({ email }, { age: 44 });
+    const allowed_updates = ["gender", "photoUrl", "skills", "profile"];
+
+    const updateData = Object.keys(data).every((k) => {
+      return allowed_updates.includes(k);
+    });
+
+    if (!updateData) {
+      throw new Error("Update not allowed");
+    }
+
+    await user.findOneAndUpdate({ _id: userId }, data, {
+      runValidators: true,
+    });
     res.send("User updated successfully");
   } catch (err) {
-    res.status(404).send("Something went wrong");
+    res.status(404).send("Update failed:" + err.message);
   }
 });
 
