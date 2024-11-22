@@ -67,6 +67,10 @@ app.patch("/user/:userId", async (req, res) => {
       throw new Error("Update not allowed");
     }
 
+    if (!data.skills.length > 10) {
+      throw new Error("Skills should not be more 10");
+    }
+
     await user.findOneAndUpdate({ _id: userId }, data, {
       runValidators: true,
     });
