@@ -2,17 +2,15 @@ const express = require("express");
 const { auth } = require("./middleware/auth");
 const connectDB = require("./config/database");
 const User = require("./models/user");
-const user = require("./models/user");
+const { validation } = require("./utils/validation");
+const bcrypt = require("bcrypt");
 
 const app = express();
 
 app.use(express.json());
 
 app.post("/signup", async (req, res) => {
-  console.log(req.body);
-  //Creating new instance of user
-  const user = new User(req.body);
-
+  const { firstName, lastName, email, password } = req.body;
   /* const user = new User({
     firstName: "Venkatesh",
     lastName: "Ramalingam",
@@ -23,10 +21,21 @@ app.post("/signup", async (req, res) => {
   }); */
 
   try {
+    //validating user
+    validation(req);
+
+    const passwordHash = await bcrypt.hash(password, 10);
+    //Creating new instance of user
+    const user = new User({
+      firstName,
+      lastName,
+      email,
+      password: passwordHash,
+    });
     await user.save();
     res.send("User scessfully saved");
   } catch (err) {
-    res.status(500).send("User not added to database" + err.message);
+    res.status(500).send("ERROR: " + err.message);
   }
 });
 
