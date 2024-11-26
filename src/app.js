@@ -49,10 +49,11 @@ app.post("/login", async (req, res) => {
     }
     const isPasswordValid = await bcrypt.compare(password, user.password);
 
-    if (!isPasswordValid) {
-      throw new Error("Invalid user");
-    } else {
+    if (isPasswordValid) {
+      res.cookie("token", "ghdfdghfgdjsgfjsdgg");
       res.send("Login successful");
+    } else {
+      throw new Error("Invalid user");
     }
   } catch (err) {
     res.status(400).send("ERROR: " + err.message);
