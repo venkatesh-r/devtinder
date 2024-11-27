@@ -4,10 +4,12 @@ const connectDB = require("./config/database");
 const User = require("./models/user");
 const { validation } = require("./utils/validation");
 const bcrypt = require("bcrypt");
+const cookieParser = require("cookie-parser");
 
 const app = express();
 
 app.use(express.json());
+app.use(cookieParser());
 
 app.post("/signup", async (req, res) => {
   const { firstName, lastName, email, password } = req.body;
@@ -37,6 +39,12 @@ app.post("/signup", async (req, res) => {
   } catch (err) {
     res.status(500).send("ERROR: " + err.message);
   }
+});
+
+app.get("/profile", async (req, res) => {
+  const cookies = req.cookies;
+  console.log(cookies);
+  res.send("Cookies retrieved");
 });
 
 //Login call
