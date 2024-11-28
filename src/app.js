@@ -5,6 +5,7 @@ const User = require("./models/user");
 const { validation } = require("./utils/validation");
 const bcrypt = require("bcrypt");
 const cookieParser = require("cookie-parser");
+const jwt = require("jsonwebtoken");
 
 const app = express();
 
@@ -13,15 +14,6 @@ app.use(cookieParser());
 
 app.post("/signup", async (req, res) => {
   const { firstName, lastName, email, password } = req.body;
-  /* const user = new User({
-    firstName: "Venkatesh",
-    lastName: "Ramalingam",
-    email: "test@gmail.com",
-    password: "admin123",
-    age: 36,
-    gender: "male",
-  }); */
-
   try {
     //validating user
     validation(req);
@@ -41,12 +33,6 @@ app.post("/signup", async (req, res) => {
   }
 });
 
-app.get("/profile", async (req, res) => {
-  const cookies = req.cookies;
-  console.log(cookies);
-  res.send("Cookies retrieved");
-});
-
 //Login call
 app.post("/login", async (req, res) => {
   try {
@@ -58,13 +44,15 @@ app.post("/login", async (req, res) => {
     const isPasswordValid = await bcrypt.compare(password, user.password);
 
     if (isPasswordValid) {
-      res.cookie("token", "ghdfdghfgdjsgfjsdgg");
+      const token = jwt.sign({ _id: user._id }, "admin@123");
+      console.log(user._id, token);
+      res.cookie("token", token);
       res.send("Login successful");
     } else {
       throw new Error("Invalid user");
     }
   } catch (err) {
-    res.status(400).send("ERROR: " + err.message);
+    res.status(500).send("ERROR: " + err.message);
   }
 });
 
@@ -74,7 +62,24 @@ app.get("/user", async (req, res) => {
     const userDetail = await User.find({ email: req.body.email });
     res.send(userDetail);
   } catch (err) {
-    res.status(404).send("Something went wrong!");
+    res.status(500).send("ERROR: " + err.message);
+  }
+});
+
+//Profile call
+app.get("/profile", async (req, res) => {
+  try {
+    const cookies = req.cookies;
+    const { token } = cookies;
+    if (!token) {
+      throw new Error("Invalid token");
+    }
+    const tokenVerified = jwt.verify(token, "admin@123");
+    const { _id } = tokenVerified;
+    const user = await User.findById(_id);
+    res.send("Profile sucessful");
+  } catch (err) {
+    res.status(500).send("ERROR: " + err.message);
   }
 });
 

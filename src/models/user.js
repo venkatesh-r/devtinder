@@ -68,3 +68,12 @@ const userSchema = new mongoose.Schema(
 );
 
 module.exports = mongoose.model("User", userSchema);
+
+/* const user = new User({
+    firstName: "Venkatesh",
+    lastName: "Ramalingam",
+    email: "test@gmail.com",
+    password: "admin123",
+    age: 36,
+    gender: "male",
+  }); */

@@ -6,7 +6,7 @@ const validation = (req) => {
   if (!firstName || !lastName) {
     throw new Error("Enter valid the name");
   } else if (!validator.isEmail(email)) {
-    throw new Error("Enter valid the email");
+    throw new Error("Enter the valid email");
   } else if (!validator.isStrongPassword(password)) {
     throw new Error("Enter valid strong password");
   }
