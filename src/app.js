@@ -1,5 +1,5 @@
 const express = require("express");
-const { auth } = require("./middleware/auth");
+const { userAuth } = require("./middleware/auth");
 const connectDB = require("./config/database");
 const User = require("./models/user");
 const { validation } = require("./utils/validation");
@@ -56,70 +56,13 @@ app.post("/login", async (req, res) => {
   }
 });
 
-//Get user call
-app.get("/user", async (req, res) => {
-  try {
-    const userDetail = await User.find({ email: req.body.email });
-    res.send(userDetail);
-  } catch (err) {
-    res.status(500).send("ERROR: " + err.message);
-  }
-});
-
 //Profile call
-app.get("/profile", async (req, res) => {
+app.get("/profile", userAuth, async (req, res) => {
   try {
-    const cookies = req.cookies;
-    const { token } = cookies;
-    if (!token) {
-      throw new Error("Invalid token");
-    }
-    const tokenVerified = jwt.verify(token, "admin@123");
-    const { _id } = tokenVerified;
-    const user = await User.findById(_id);
-    res.send("Profile sucessful");
+    const user = req.user;
+    res.send(user);
   } catch (err) {
     res.status(500).send("ERROR: " + err.message);
-  }
-});
-
-//delete user call
-app.delete("/user", async (req, res) => {
-  const userId = req.body.userId;
-  console.log(userId);
-  try {
-    await user.findByIdAndDelete(userId);
-    res.send("user deleted successfully");
-  } catch (err) {
-    res.status(404).send("something went wrong");
-  }
-});
-
-//Update user
-app.patch("/user/:userId", async (req, res) => {
-  const userId = req.params?.userId;
-  const data = req.body;
-  try {
-    const allowed_updates = ["gender", "photoUrl", "skills", "profile"];
-
-    const updateData = Object.keys(data).every((k) => {
-      return allowed_updates.includes(k);
-    });
-
-    if (!updateData) {
-      throw new Error("Update not allowed");
-    }
-
-    if (!data.skills.length > 10) {
-      throw new Error("Skills should not be more 10");
-    }
-
-    await user.findOneAndUpdate({ _id: userId }, data, {
-      runValidators: true,
-    });
-    res.send("User updated successfully");
-  } catch (err) {
-    res.status(404).send("Update failed:" + err.message);
   }
 });
 
@@ -133,41 +76,3 @@ connectDB()
   .catch((err) => {
     console.error("Database not connected");
   });
-
-/* app.use("/admin", auth);
-
-app.get("/admin/user", (req, res) => {
-  res.send("Added admin user");
-});
-
-app.get("/admin/delete", (req, res) => {
-  res.send("deleted data");
-});
-
-app.get(
-  "/test/:userId/:name/:password",
-  (req, res, next) => {
-    console.log(req.params);
-    //res.send({ name: "venkatesh" });
-    next();
-  },
-  (req, res, next) => {
-    console.log("response - 2");
-    next();
-  },
-  (req, res) => {
-    console.log("response - 3");
-    res.send("response sended");
-  }
-);
-
-app.use("/getUserData", (req, res) => {
-  throw new Error("error");
-});
-
-//To send unwanted errors
-app.use("/", (err, req, res, next) => {
-  if (err) {
-    res.status(500).send("Something went wrong");
-  }
-}); */
