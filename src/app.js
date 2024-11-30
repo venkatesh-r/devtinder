@@ -56,6 +56,16 @@ app.post("/login", async (req, res) => {
   }
 });
 
+//send request connection
+app.post("/sendRequest", userAuth, (req, res) => {
+  try {
+    const { firstName } = req.user;
+    res.send(firstName + " has sent the user request");
+  } catch (err) {
+    res.status(400).send("ERROR : " + err.message);
+  }
+});
+
 //Profile call
 app.get("/profile", userAuth, async (req, res) => {
   try {
