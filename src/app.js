@@ -1,59 +1,18 @@
 const express = require("express");
 const { userAuth } = require("./middleware/auth");
 const connectDB = require("./config/database");
-const User = require("./models/user");
+
 const { validation } = require("./utils/validation");
-const bcrypt = require("bcrypt");
 const cookieParser = require("cookie-parser");
-const jwt = require("jsonwebtoken");
 
 const app = express();
 
 app.use(express.json());
 app.use(cookieParser());
 
-app.post("/signup", async (req, res) => {
-  const { firstName, lastName, email, password } = req.body;
-  try {
-    //validating user
-    validation(req);
+const authRouter = require("./routes/auth");
 
-    const passwordHash = await bcrypt.hash(password, 10);
-    //Creating new instance of user
-    const user = new User({
-      firstName,
-      lastName,
-      email,
-      password: passwordHash,
-    });
-    await user.save();
-    res.send("User scessfully saved");
-  } catch (err) {
-    res.status(500).send("ERROR: " + err.message);
-  }
-});
-
-//Login call
-app.post("/login", async (req, res) => {
-  try {
-    const { email, password } = req.body;
-    const user = await User.findOne({ email: email });
-    if (!user) {
-      throw new Error("Invalid user");
-    }
-    const isPasswordValid = await user.bcryptPWD(password);
-    console.log(isPasswordValid);
-    if (isPasswordValid) {
-      const token = await user.getJWT();
-      res.cookie("token", token);
-      res.send("Login successful");
-    } else {
-      throw new Error("Invalid user");
-    }
-  } catch (err) {
-    res.status(500).send("ERROR: " + err.message);
-  }
-});
+app.use("/", authRouter);
 
 //send request connection
 app.post("/sendRequest", userAuth, (req, res) => {
