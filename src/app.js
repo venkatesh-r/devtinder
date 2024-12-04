@@ -11,28 +11,12 @@ app.use(express.json());
 app.use(cookieParser());
 
 const authRouter = require("./routes/auth");
+const profileRouter = require("./routes/profile");
+const requestRouter = require("./routes/request");
 
 app.use("/", authRouter);
-
-//send request connection
-app.post("/sendRequest", userAuth, (req, res) => {
-  try {
-    const { firstName } = req.user;
-    res.send(firstName + " has sent the user request");
-  } catch (err) {
-    res.status(400).send("ERROR : " + err.message);
-  }
-});
-
-//Profile call
-app.get("/profile", userAuth, async (req, res) => {
-  try {
-    const user = req.user;
-    res.send(user);
-  } catch (err) {
-    res.status(500).send("ERROR: " + err.message);
-  }
-});
+app.use("/", profileRouter);
+app.use("/", requestRouter);
 
 connectDB()
   .then(() => {
