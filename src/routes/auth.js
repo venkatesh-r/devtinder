@@ -3,6 +3,7 @@ const { userAuth } = require("../middleware/auth");
 const User = require("../models/user");
 const { validation } = require("../utils/validation");
 const bcrypt = require("bcrypt");
+const { TokenExpiredError } = require("jsonwebtoken");
 
 const authRouter = express.Router();
 
@@ -45,6 +46,11 @@ authRouter.post("/login", async (req, res) => {
   } catch (err) {
     res.status(500).send("ERROR: " + err.message);
   }
+});
+
+authRouter.post("/logout", (req, res) => {
+  res.cookie("token", null, { expires: new Date(Date.now()) });
+  res.send("Log out successfully");
 });
 
 module.exports = authRouter;
