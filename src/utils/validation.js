@@ -12,6 +12,21 @@ const validation = (req) => {
   }
 };
 
+const validateProfileData = (req) => {
+  const userfieldtoUpdate = [
+    "firstName",
+    "lastName",
+    "age",
+    "skills",
+    "gender",
+    "bio",
+  ];
+  const updatedUserField = Object.keys(req.body).every((k) => {
+    return userfieldtoUpdate.includes(k);
+  });
+};
+
 module.exports = {
   validation,
+  validateProfileData,
 };
