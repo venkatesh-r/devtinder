@@ -24,6 +24,8 @@ const validateProfileData = (req) => {
   const updatedUserField = Object.keys(req.body).every((k) => {
     return userfieldtoUpdate.includes(k);
   });
+
+  return updatedUserField;
 };
 
 module.exports = {
