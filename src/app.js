@@ -1,8 +1,5 @@
 const express = require("express");
-const { userAuth } = require("./middleware/auth");
 const connectDB = require("./config/database");
-
-const { validation } = require("./utils/validation");
 const cookieParser = require("cookie-parser");
 
 const app = express();
