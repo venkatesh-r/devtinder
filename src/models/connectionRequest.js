@@ -24,6 +24,14 @@ const connectionRequestSchema = new mongoose.Schema(
   }
 );
 
+connectionRequestSchema.pre("save", function () {
+  const connectionRequest = this;
+  //Check if the fromUserID is same as userId
+  if (connectionRequest.fromUserId.equals(connectionRequest.toUserId)) {
+    throw new Error("Cannot send connection request to yourself");
+  }
+});
+
 const connectionRequestModel = new mongoose.model(
   "connectionRequest",
   connectionRequestSchema
