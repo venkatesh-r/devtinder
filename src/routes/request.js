@@ -21,12 +21,31 @@ requestRouter.post(
       }
 
       const toUser = await User.findById(toUserId);
-      console.log(toUser);
       if (!toUser) {
         return res.status(404).json({ message: "User not found" });
       }
 
-      res.send("successful");
+      const existingConnectionRequest = await connectionRequest.findOne({
+        $or: [
+          { fromUserId, toUserId },
+          { fromUserId: toUserId, toUserId: fromUserId },
+        ],
+      });
+
+      if (existingConnectionRequest) {
+        return res
+          .status(404)
+          .send({ message: "Connection request is already sent", data });
+      }
+
+      const connectionrequest = new connectionRequest({
+        fromUserId,
+        toUserId,
+        status,
+      });
+
+      const data = await connectionrequest.save();
+      res.json({ message: "Connection request sent successfully", data });
     } catch (err) {
       res.status(400).send("ERROR : " + err.message);
     }
