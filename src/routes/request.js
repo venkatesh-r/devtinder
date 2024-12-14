@@ -35,7 +35,7 @@ requestRouter.post(
       if (existingConnectionRequest) {
         return res
           .status(404)
-          .send({ message: "Connection request is already sent", data });
+          .send({ message: "Connection request is already sent" });
       }
 
       const connectionrequest = new connectionRequest({
@@ -47,7 +47,7 @@ requestRouter.post(
       const data = await connectionrequest.save();
       res.json({ message: "Connection request sent successfully", data });
     } catch (err) {
-      res.status(400).send("ERROR : " + err.message);
+      res.status(404).send("ERROR : " + err.message);
     }
   }
 );
