@@ -52,4 +52,24 @@ requestRouter.post(
   }
 );
 
+requestRouter.get(
+  "/request/reviews/:status/:requestID",
+  userAuth,
+  async (req, res) => {
+    try {
+      const loggedInUser = req.user;
+      const { status, requestID } = req.params;
+
+      const allowedStatus = ["accepted", "rejected"];
+
+      if (!allowedStatus.includes(status)) {
+        res.status(404).send("Invalid status");
+      }
+      res.send("Sucessful");
+    } catch (err) {
+      res.status(404).send("ERROR: " + err.message);
+    }
+  }
+);
+
 module.exports = requestRouter;
