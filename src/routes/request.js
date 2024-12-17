@@ -53,18 +53,26 @@ requestRouter.post(
 );
 
 requestRouter.get(
-  "/request/reviews/:status/:requestID",
+  "/request/reviews/:status/:requestId",
   userAuth,
   async (req, res) => {
     try {
       const loggedInUser = req.user;
-      const { status, requestID } = req.params;
+      const { status, requestId } = req.params;
 
       const allowedStatus = ["accepted", "rejected"];
 
       if (!allowedStatus.includes(status)) {
         res.status(404).send("Invalid status");
       }
+
+      //myself => anotherperson, loggedInId = toUserId,, status = interested, request Id should have valid ID
+
+      const connectionRequest = connectionRequest.findOne({
+        _id: requestId,
+        status: status,
+      });
+
       res.send("Sucessful");
     } catch (err) {
       res.status(404).send("ERROR: " + err.message);
