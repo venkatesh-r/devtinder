@@ -70,10 +70,19 @@ requestRouter.get(
 
       const connectionRequest = connectionRequest.findOne({
         _id: requestId,
-        status: status,
+        status: "interested",
+        toUser: loggedInUser._id,
       });
 
-      res.send("Sucessful");
+      if (!connectionRequest) {
+        res.status(404).json({ message: "Connection request not found" });
+      }
+
+      connectionRequest.status = status;
+
+      const data = await connectionRequest.save();
+
+      res.send("Connection request accepted");
     } catch (err) {
       res.status(404).send("ERROR: " + err.message);
     }
