@@ -66,8 +66,6 @@ requestRouter.post(
         res.status(404).send("Invalid status");
       }
 
-      console.log(loggedInUser._id, status, requestId);
-
       //myself => anotherperson, loggedInId = toUserId,, status = interested, request Id should have valid ID
 
       const connectionrequest = await connectionRequest.findOne({
@@ -79,8 +77,6 @@ requestRouter.post(
       if (!connectionrequest) {
         res.status(404).json({ message: "Connection request not found" });
       }
-
-      console.log("test::" + connectionrequest);
 
       connectionrequest.status = status;
 
