@@ -6,8 +6,7 @@ const userRouter = express.Router();
 userRouter.get("/user/requests/received", userAuth, async (req, res) => {
   try {
     const loggedInUser = req.user;
-
-    const connectionRequest = await connectionRequestModel({
+    const connectionRequest = await connectionRequestModel.find({
       toUserId: loggedInUser,
       status: "interested",
     });
