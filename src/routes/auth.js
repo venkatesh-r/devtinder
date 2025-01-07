@@ -3,12 +3,12 @@ const { userAuth } = require("../middleware/auth");
 const User = require("../models/user");
 const { validation } = require("../utils/validation");
 const bcrypt = require("bcrypt");
-const { TokenExpiredError } = require("jsonwebtoken");
 
 const authRouter = express.Router();
 
 authRouter.post("/signup", async (req, res) => {
-  const { firstName, lastName, email, password } = req.body;
+  const { firstName, lastName, email, password, profile, bio, skills, age } =
+    req.body;
   try {
     //validating user
     validation(req);
@@ -19,6 +19,10 @@ authRouter.post("/signup", async (req, res) => {
       lastName,
       email,
       password: passwordHash,
+      profile,
+      bio,
+      skills,
+      age,
     });
     await user.save();
     res.send("User scessfully saved");
