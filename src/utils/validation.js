@@ -20,6 +20,7 @@ const validateProfileData = (req) => {
     "skills",
     "gender",
     "bio",
+    "profile",
   ];
   const updatedUserField = Object.keys(req.body).every((k) => {
     return userfieldtoUpdate.includes(k);
