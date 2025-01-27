@@ -24,10 +24,15 @@ authRouter.post("/signup", async (req, res) => {
       skills,
       age,
     });
-    await user.save();
-    res.send("User scessfully saved");
+    const savedUser = await user.save();
+    const token = await savedUser.getJWT();
+    res.cookie("token", token, {
+      expires: new Date(Date.now() + 8 * 3600000),
+    });
+
+    res.json({ message: "User scessfully saved", data: savedUser });
   } catch (err) {
-    res.status(500).send("ERROR: " + err.message);
+    res.status(400).send("ERROR: " + err.message);
   }
 });
 
@@ -42,10 +47,12 @@ authRouter.post("/login", async (req, res) => {
     const isPasswordValid = await user.bcryptPWD(password);
     if (isPasswordValid) {
       const token = await user.getJWT();
-      res.cookie("token", token);
+      res.cookie("token", token, {
+        expires: new Date(Date.now() + 8 * 3600000),
+      });
       res.send(user);
     } else {
-      throw new Error("Invalid user");
+      throw new Error("Invalid credentials");
     }
   } catch (err) {
     res.status(500).send("ERROR: " + err.message);
