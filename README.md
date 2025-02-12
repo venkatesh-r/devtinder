@@ -68,3 +68,120 @@ Browse Profiles: View a feed of other users and send connection requests.
 Connections: View users who have sent you requests and manage your matches.
 
 ## API Endpoints
+
+Sign Up
+
+Endpoint: POST /signup
+Description: Register a new user.
+Request Body:
+{
+"firstName": "kevin",
+"lastName": "petersen",
+"email": "kevin@gmail.com",
+"password": "Kevin@123",
+"age": 45,
+"gender": "male",
+"skills": ["cricket", "Batsman"],
+"bio": "I am a cricket player"
+}
+
+Login
+
+Endpoint: POST /login
+Description: Authenticate an existing user.
+Request Body:
+
+{
+"email": "john.doe@example.com",
+"password": "securepassword"
+}
+
+Logout
+
+Endpoint: POST /logout
+Description: Log out the current user.
+
+User Profile
+
+View Profile
+Endpoint: GET profile/view
+Description: Retrieve a user's profile information.
+Update Profile
+
+Endpoint: PUT users/:userId
+Description: Update a user's profile details.
+Request Body:
+
+{
+"firstName": "John",
+"lastName": "Doe",
+"age": 31,
+"bio": "An updated bio",
+"photo": "new_profile_photo.jpg"
+}
+
+Delete User
+Endpoint: DELETE /user
+Description: Delete a user.
+
+Request Body:
+
+{
+"userId" : "673cdace35a4c3e4504933cd"
+}
+
+Connections
+Send Connection Request
+
+Endpoint: POST sendRequest/interested/:id
+Description: Send a connection request to another user.
+
+View Received Requests
+
+Endpoint: POST /request/reviews/accepted/:id
+Description: View connection requests received by the current user.
+
+View Connections
+
+Endpoint: GET user/requests/received
+Description: View all confirmed connections (matches) of the current user.
+
+Feed
+Get User Feed
+Endpoint: GET /feed
+Description: Retrieve a list of user profiles for the feed.
+
+## Database Schema
+
+User:
+
+firstName (String)
+lastName (String)
+email (String, unique)
+password (String, hashed)
+age (Number)
+bio (String)
+profile (String, URL or file path)
+bio (String)
+createdAt (Date)
+
+Connections
+
+fromUserId (User ID)
+toUserId (User ID)
+status (String: 'ignored', 'accepted', 'rejected', 'interested')
+createdAt (Date)
+
+## Contributing
+
+Contributions are welcome! Please fork the repository and submit a pull request for any enhancements or bug fixes.
+
+## License
+
+This project is licensed under the MIT License. See the LICENSE file for details.
+
+## Acknowledgements
+
+Express.js
+MongoDB
+Mongoose
