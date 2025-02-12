@@ -61,45 +61,45 @@ npm install
 
 ## Usage
 
-Sign Up: Create a new account by providing first name, last name, age, bio, and a profile photo.
-Login: Access your account using email and password.
-Profile Management: Update your profile information and photo.
-Browse Profiles: View a feed of other users and send connection requests.
-Connections: View users who have sent you requests and manage your matches.
+1. Sign Up: Create a new account by providing first name, last name, age, bio, and a profile photo.
+2. Login: Access your account using email and password.
+3. Profile Management: Update your profile information and photo.
+4. Browse Profiles: View a feed of other users and send connection requests.
+   Connections: View users who have sent you requests and manage your matches.
 
 ## API Endpoints
 
-Sign Up
+- Sign Up
 
-Endpoint: POST /signup
-Description: Register a new user.
-Request Body:
-{
-"firstName": "kevin",
-"lastName": "petersen",
-"email": "kevin@gmail.com",
-"password": "Kevin@123",
-"age": 45,
-"gender": "male",
-"skills": ["cricket", "Batsman"],
-"bio": "I am a cricket player"
-}
+- Endpoint: POST /signup
+- Description: Register a new user.
+- Request Body:
+  {
+  "firstName": "kevin",
+  "lastName": "petersen",
+  "email": "kevin@gmail.com",
+  "password": "Kevin@123",
+  "age": 45,
+  "gender": "male",
+  "skills": ["cricket", "Batsman"],
+  "bio": "I am a cricket player"
+  }
 
-Login
+- Login
 
-Endpoint: POST /login
-Description: Authenticate an existing user.
-Request Body:
+- Endpoint: POST /login
+- Description: Authenticate an existing user.
+- Request Body:
 
 {
 "email": "john.doe@example.com",
 "password": "securepassword"
 }
 
-Logout
+- Logout
 
-Endpoint: POST /logout
-Description: Log out the current user.
+- Endpoint: POST /logout
+- Description: Log out the current user.
 
 User Profile
 
