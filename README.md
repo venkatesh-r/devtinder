@@ -97,7 +97,6 @@ npm install
 }
 
 - Logout
-
 - Endpoint: POST /logout
 - Description: Log out the current user.
 
