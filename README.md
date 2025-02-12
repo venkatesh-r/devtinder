@@ -101,12 +101,12 @@ npm install
 - Endpoint: POST /logout
 - Description: Log out the current user.
 
-User Profile
+- User Profile
 
-View Profile
-Endpoint: GET profile/view
-Description: Retrieve a user's profile information.
-Update Profile
+- View Profile
+- Endpoint: GET profile/view
+- Description: Retrieve a user's profile information.
+- Update Profile
 
 Endpoint: PUT users/:userId
 Description: Update a user's profile details.
