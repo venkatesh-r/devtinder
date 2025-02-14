@@ -71,40 +71,40 @@ npm install
 
 1. Sign Up
 
-- Endpoint: POST /signup
-- Description: Register a new user.
-- Request Body:
-  {
-  "firstName": "kevin",
-  "lastName": "petersen",
-  "email": "kevin@gmail.com",
-  "password": "Kevin@123",
-  "age": 45,
-  "gender": "male",
-  "skills": ["cricket", "Batsman"],
-  "bio": "I am a cricket player"
-  }
+   - Endpoint: POST /signup
+   - Description: Register a new user.
+   - Request Body:
+     {
+     "firstName": "kevin",
+     "lastName": "petersen",
+     "email": "kevin@gmail.com",
+     "password": "Kevin@123",
+     "age": 45,
+     "gender": "male",
+     "skills": ["cricket", "Batsman"],
+     "bio": "I am a cricket player"
+     }
 
 2. Login
 
-- Endpoint: POST /login
-- Description: Authenticate an existing user.
-- Request Body:{
-  "email": "john.doe@example.com",
-  "password": "securepassword"
-  }
+   - Endpoint: POST /login
+   - Description: Authenticate an existing user.
+   - Request Body:{
+     "email": "john.doe@example.com",
+     "password": "securepassword"
+     }
 
 3. Logout
 
-- Endpoint: POST /logout
-- Description: Log out the current user.
+   - Endpoint: POST /logout
+   - Description: Log out the current user.
 
-- User Profile
+### User Profile
 
 4. View Profile
 
-- Endpoint: GET profile/view
-- Description: Retrieve a user's profile information.
+   - Endpoint: GET profile/view
+   - Description: Retrieve a user's profile information.
 
 5. Update Profile
 
@@ -119,35 +119,36 @@ npm install
      }
 
 6. Delete User
+
    - Endpoint: DELETE /user
    - Description: Delete a user.
 
-- Request Body:{
-  "userId" : "673cdace35a4c3e4504933cd"
-  }
+   - Request Body:{
+     "userId" : "673cdace35a4c3e4504933cd"
+     }
 
-Connections
+### Connections
 
 7. Send Connection Request
 
-- Endpoint: POST sendRequest/interested/:id
-- Description: Send a connection request to another user.
+   - Endpoint: POST sendRequest/interested/:id
+   - Description: Send a connection request to another user.
 
 8. View Received Requests
 
-- Endpoint: POST /request/reviews/accepted/:id
-- Description: View connection requests received by the current user.
+   - Endpoint: POST /request/reviews/accepted/:id
+   - Description: View connection requests received by the current user.
 
 9. View Connections
 
-- Endpoint: GET user/requests/received
-- Description: View all confirmed connections (matches) of the current user.
+   - Endpoint: GET user/requests/received
+   - Description: View all confirmed connections (matches) of the current user.
 
 10. Feed
 
-- Get User Feed
-- Endpoint: GET /feed
-- Description: Retrieve a list of user profiles for the feed.
+    - Get User Feed
+    - Endpoint: GET /feed
+    - Description: Retrieve a list of user profiles for the feed.
 
 ## Database Schema
 
