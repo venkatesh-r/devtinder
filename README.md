@@ -69,7 +69,7 @@ npm install
 
 ## API Endpoints
 
-- Sign Up
+1. Sign Up
 
 - Endpoint: POST /signup
 - Description: Register a new user.
@@ -85,74 +85,73 @@ npm install
   "bio": "I am a cricket player"
   }
 
-- Login
+2. Login
 
 - Endpoint: POST /login
 - Description: Authenticate an existing user.
-- Request Body:
+- Request Body:{
+  "email": "john.doe@example.com",
+  "password": "securepassword"
+  }
 
-{
-"email": "john.doe@example.com",
-"password": "securepassword"
-}
+3. Logout
 
-- Logout
 - Endpoint: POST /logout
 - Description: Log out the current user.
 
 - User Profile
 
-- View Profile
+4. View Profile
+
 - Endpoint: GET profile/view
 - Description: Retrieve a user's profile information.
-- Update Profile
 
-Endpoint: PUT users/:userId
-Description: Update a user's profile details.
-Request Body:
+5. Update Profile
 
-{
-"firstName": "John",
-"lastName": "Doe",
-"age": 31,
-"bio": "An updated bio",
-"photo": "new_profile_photo.jpg"
-}
+   - Endpoint: PUT users/:userId
+   - Description: Update a user's profile details.
+   - Request Body: {
+     "firstName": "John",
+     "lastName": "Doe",
+     "age": 31,
+     "bio": "An updated bio",
+     "photo": "new_profile_photo.jpg"
+     }
 
-Delete User
-Endpoint: DELETE /user
-Description: Delete a user.
+6. Delete User
+   - Endpoint: DELETE /user
+   - Description: Delete a user.
 
-Request Body:
-
-{
-"userId" : "673cdace35a4c3e4504933cd"
-}
+- Request Body:{
+  "userId" : "673cdace35a4c3e4504933cd"
+  }
 
 Connections
-Send Connection Request
 
-Endpoint: POST sendRequest/interested/:id
-Description: Send a connection request to another user.
+7. Send Connection Request
 
-View Received Requests
+- Endpoint: POST sendRequest/interested/:id
+- Description: Send a connection request to another user.
 
-Endpoint: POST /request/reviews/accepted/:id
-Description: View connection requests received by the current user.
+8. View Received Requests
 
-View Connections
+- Endpoint: POST /request/reviews/accepted/:id
+- Description: View connection requests received by the current user.
 
-Endpoint: GET user/requests/received
-Description: View all confirmed connections (matches) of the current user.
+9. View Connections
 
-Feed
-Get User Feed
-Endpoint: GET /feed
-Description: Retrieve a list of user profiles for the feed.
+- Endpoint: GET user/requests/received
+- Description: View all confirmed connections (matches) of the current user.
+
+10. Feed
+
+- Get User Feed
+- Endpoint: GET /feed
+- Description: Retrieve a list of user profiles for the feed.
 
 ## Database Schema
 
-User:
+1. User:
 
 firstName (String)
 lastName (String)
@@ -164,7 +163,7 @@ profile (String, URL or file path)
 bio (String)
 createdAt (Date)
 
-Connections
+2. Connections
 
 fromUserId (User ID)
 toUserId (User ID)
@@ -181,6 +180,6 @@ This project is licensed under the MIT License. See the LICENSE file for details
 
 ## Acknowledgements
 
-Express.js
-MongoDB
-Mongoose
+- Express.js
+- MongoDB
+- Mongoose
