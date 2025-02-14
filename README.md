@@ -54,9 +54,10 @@ cookie parser
 
 2. Install Dependencies:
 
-npm install
+   npm install
 
 3. Start the Server:
+
    npm start
 
 ## Usage
@@ -154,22 +155,22 @@ npm install
 
 1. User:
 
-firstName (String)
-lastName (String)
-email (String, unique)
-password (String, hashed)
-age (Number)
-bio (String)
-profile (String, URL or file path)
-bio (String)
-createdAt (Date)
+   - firstName (String)
+   - lastName (String)
+   - email (String, unique)
+   - password (String, hashed)
+   - age (Number)
+   - bio (String)
+   - profile (String, URL or file path)
+   - bio (String)
+   - createdAt (Date)
 
 2. Connections
 
-fromUserId (User ID)
-toUserId (User ID)
-status (String: 'ignored', 'accepted', 'rejected', 'interested')
-createdAt (Date)
+   - fromUserId (User ID)
+   - toUserId (User ID)
+   - status (String: 'ignored', 'accepted', 'rejected', 'interested')
+   - createdAt (Date)
 
 ## Contributing
 
