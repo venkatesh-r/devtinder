@@ -50,7 +50,7 @@ cookie parser
    git clone https://github.com/venkatesh-r/devtinder.git
    ```
 
-   cd tinder-clone
+   cd devtinder
 
 2. Install Dependencies:
 
